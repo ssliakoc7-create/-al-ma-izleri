@@ -1,50 +1,91 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Custom elegant popup styling */
+/* Brutalist popup styling */
 .custom-popup .leaflet-popup-content-wrapper {
   padding: 0;
   overflow: hidden;
-  border-radius: 1rem;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
+  border-radius: 0;
+  box-shadow: 8px 8px 0 0 #000;
+  border: 4px solid black;
+  background: white;
 }
 .custom-popup .leaflet-popup-content {
   margin: 0;
-  width: 280px !important;
+  width: auto !important;
 }
-.custom-popup .leaflet-popup-tip {
-  background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+.custom-popup .leaflet-popup-tip-container {
+  display: none;
 }
 
 /* Tooltip Styling */
 .custom-tooltip {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.5) !important;
-  border-radius: 0.5rem !important;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+  background: white !important;
+  border: 3px solid black !important;
+  border-radius: 0 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
   padding: 0 !important;
   overflow: hidden;
 }
 .custom-tooltip::before {
-  display: none !important; /* Hide tiny triangle for cleaner look */
+  display: none !important;
 }
 
 /* Dark Mode Overrides */
 .dark .custom-popup .leaflet-popup-content-wrapper {
-  background: rgba(30, 41, 59, 0.95); /* slate-800 */
-  border-color: rgba(51, 65, 85, 0.5);
-}
-.dark .custom-popup .leaflet-popup-tip {
-  background: rgba(30, 41, 59, 0.95);
+  background: #1e293b;
+  border-color: #334155;
+  box-shadow: 8px 8px 0 0 #4f46e5;
 }
 .dark .custom-tooltip {
-  background: rgba(30, 41, 59, 0.95) !important;
-  border-color: rgba(51, 65, 85, 0.5) !important;
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  box-shadow: 4px 4px 0 0 #4f46e5 !important;
+}
+
+.custom-brutalist-marker, .custom-brutalist-marker-fav {
+  background: transparent !important;
+  border: none !important;
+}
+
+@keyframes markerBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.marker-bounce {
+  animation: markerBounce 2s infinite ease-in-out;
+}
+
+.custom-brutalist-marker:hover .marker-bounce {
+  animation-play-state: paused;
+}
+
+.leaflet-container {
+  background: #F2F2EC !important;
+}
+
+.dark .leaflet-container {
+  background: #0f172a !important;
+}
+
+/* Give the map a slightly desaturated, high-contrast look */
+.leaflet-tile-pane {
+  filter: none;
+}
+
+.dark .leaflet-tile-pane {
+  filter: brightness(0.8) contrast(1.1) !important;
+}
+
+.custom-tooltip {
+  border: 4px solid black !important;
+  box-shadow: 6px 6px 0 0 #000 !important;
+}
+
+.dark .custom-tooltip {
+  border-color: #4f46e5 !important;
+  box-shadow: 6px 6px 0 0 #4f46e5 !important;
 }
 
 .no-scrollbar::-webkit-scrollbar {

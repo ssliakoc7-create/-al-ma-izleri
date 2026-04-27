@@ -1,5 +1,5 @@
 {
   "name": "Anadolu Yakası Öğrenci Kafeleri",
   "description": "İstanbul Anadolu yakasında öğrencilerin ders çalışabileceği, ücretsiz internet ve priz sağlayan kafeleri gösteren harita uygulaması.",
-  "requestFramePermissions": []
+  "requestFramePermissions": ["geolocation"]
 }

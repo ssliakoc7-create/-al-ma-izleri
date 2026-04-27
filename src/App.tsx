@@ -7,6 +7,8 @@ import ListPage from './pages/ListPage';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
+import { FavoritesProvider } from './context/FavoritesContext';
+
 function AppContent() {
   const { theme, toggleTheme } = useTheme();
   const { language, toggleLanguage, t } = useLanguage();
@@ -24,7 +26,7 @@ function AppContent() {
             <div className="flex gap-4 items-center mb-2">
               <Link 
                 to="/liste?filter=campaign"
-                className="text-xs font-black tracking-[0.2em] bg-white hover:bg-black text-black hover:text-white dark:bg-indigo-600 dark:hover:bg-indigo-500 dark:text-white px-3 py-1.5 border-2 border-black dark:border-indigo-500 transition-colors cursor-pointer"
+                className="text-xs font-black tracking-[0.2em] bg-white hover:bg-black text-black hover:text-white dark:bg-yellow-600 dark:hover:bg-yellow-500 dark:text-white px-3 py-1.5 border-2 border-black dark:border-yellow-500 transition-colors cursor-pointer shadow-[4px_4px_0_0_#000] dark:shadow-[4px_4px_0_0_#854d0e]"
                 title={t('app.campaigns')}
               >
                 {t('app.campaigns').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}
@@ -53,6 +55,7 @@ function AppContent() {
             <nav className="flex gap-4 sm:gap-6 mt-1 w-full justify-between sm:justify-end">
               <Link to="/" className="text-xs sm:text-sm font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.home').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
               <Link to="/harita" className="text-xs sm:text-sm font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.map').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
+              <Link to="/liste?filter=favorites" className="text-xs sm:text-sm font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.favorites').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
             </nav>
           </div>
         </header>
@@ -73,7 +76,9 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <AppContent />
+        <FavoritesProvider>
+          <AppContent />
+        </FavoritesProvider>
       </LanguageProvider>
     </ThemeProvider>
   );
