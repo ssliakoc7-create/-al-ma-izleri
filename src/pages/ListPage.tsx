@@ -4,7 +4,6 @@ import Papa from 'papaparse';
 import { Loader2, Coffee, MapPin, Map as MapIcon, ArrowLeft, ExternalLink, Heart, Navigation } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useFavorites } from '../context/FavoritesContext';
-import ReviewSection from '../components/ReviewSection';
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQakb_z6zgEh4TzMwNShKSn3vTGa4wY9c-XwN6Mp_fZ2aQYnflQQJ5AD1mhoJhUi0P6wxtHxT6HeOV/pub?output=csv';
 
@@ -16,7 +15,7 @@ export default function ListPage() {
   const { t, language } = useLanguage();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [searchParams] = useSearchParams();
-  const [cafes, setCafes] = useState<Cafe[]>([]);
+  const [cafes, setCafes] = useState<Cafe[]>([...ADDITIONAL_CAFES]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -32,52 +31,56 @@ export default function ListPage() {
           // Merge static with CSV
           const mergedCafes: Cafe[] = [...ADDITIONAL_CAFES];
 
-          results.data
-            .filter((row: any) => row['Adı'] && row['Adı'].trim() !== '')
-            .forEach((row: any, index: number) => {
-              const name = row['Adı']?.trim();
-              if (mergedCafes.some(c => c.name === name)) return;
+          if (results.data && results.data.length > 0) {
+            results.data
+              .filter((row: any) => row['Adı'] && row['Adı'].trim() !== '')
+              .forEach((row: any, index: number) => {
+                const name = row['Adı']?.trim();
+                if (mergedCafes.some(c => c.name === name)) return;
 
-              // Use a variety of professional cafe images from Unsplash
-              const cafeImages = [
-                "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop",
-                "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
-              ];
-              const randomImage = cafeImages[index % cafeImages.length];
+                // Use a variety of professional cafe images from Unsplash
+                const cafeImages = [
+                  "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1491841573634-28140fc7ced7?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=800&auto=format&fit=crop",
+                  "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop"
+                ];
+                const randomImage = cafeImages[index % cafeImages.length];
 
-              mergedCafes.push({
-                name: name,
-                type: row['Mekan Türü'] || t('data.unknown'),
-                district: row['İlçe Adı'] || t('data.unknown'),
-                year: row['Açılış Yılı'] || '-',
-                address: row['Adres'] || t('data.noAddress'),
-                phone: row['Telefon'] || '-',
-                hours: row['Çalışma Saatleri'] || t('data.unspecified'),
-                campaign: row['Kampanya / Ekonomik Durum'] || t('data.noInfo'),
-                lat: 0, 
-                lng: 0,
-                imageUrl: randomImage,
-                features: []
+                mergedCafes.push({
+                  name: name,
+                  type: row['Mekan Türü'] || t('data.unknown'),
+                  district: row['İlçe Adı'] || t('data.unknown'),
+                  year: row['Açılış Yılı'] || '-',
+                  address: row['Adres'] || t('data.noAddress'),
+                  phone: row['Telefon'] || '-',
+                  hours: row['Çalışma Saatleri'] || t('data.unspecified'),
+                  campaign: row['Kampanya / Ekonomik Durum'] || t('data.noInfo'),
+                  lat: 0, 
+                  lng: 0,
+                  imageUrl: randomImage,
+                  features: []
+                });
               });
-            });
+          }
 
           setCafes(mergedCafes);
           setLoading(false);
         } catch (err: any) {
-          setError(err.message || t('map.error'));
+          console.error(err);
+          setCafes([...ADDITIONAL_CAFES]);
           setLoading(false);
         }
       },
       error: (error) => {
-        setError(error.message || t('map.error'));
+        console.error(error);
+        setCafes([...ADDITIONAL_CAFES]);
         setLoading(false);
       }
     });
@@ -194,6 +197,9 @@ export default function ListPage() {
                   alt={cafe.name} 
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800&auto=format&fit=crop";
+                  }}
                 />
                 <div className="absolute top-4 left-4 flex gap-2">
                   <span className="inline-block px-3 py-1 bg-[#FFD700] dark:bg-yellow-600 text-black dark:text-white text-xs font-black tracking-widest border-2 border-black dark:border-yellow-500 uppercase shadow-[4px_4px_0_0_#000]">
@@ -251,10 +257,6 @@ export default function ListPage() {
                 >
                   {t('app.getDirections')} <ExternalLink className="w-5 h-5 ml-3" />
                 </a>
-
-                <div className="mt-8">
-                   <ReviewSection cafeName={cafe.name} />
-                </div>
               </div>
             </div>
           ))}

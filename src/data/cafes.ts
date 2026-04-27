@@ -559,19 +559,5 @@ export const ADDITIONAL_CAFES: Cafe[] = [
     lng: 29.0258,
     imageUrl: "https://images.unsplash.com/photo-1507133750040-4a8f5700e35f?q=80&w=800&auto=format&fit=crop",
     features: ["wifi"]
-  },
-  {
-    name: "Drip Coffeeist - Şaşkınbakkal",
-    type: "Specialty",
-    district: "Şaşkınbakkal",
-    year: "2014",
-    address: "Şaşkınbakkal, Noter Sk. No:17",
-    phone: "-",
-    hours: "08:00 - 23:00",
-    campaign: "Bağdat Caddesi civarında sessiz durak.",
-    lat: 40.9610,
-    lng: 29.0820,
-    imageUrl: "https://images.unsplash.com/photo-1511081692775-0574deb39423?q=80&w=800&auto=format&fit=crop",
-    features: ["wifi", "quiet"]
   }
 ];

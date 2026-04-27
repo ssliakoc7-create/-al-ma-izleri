@@ -8,7 +8,6 @@ import { Loader2, Navigation, Coffee, MapPin, ChevronRight, Info, Heart } from '
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useFavorites } from '../context/FavoritesContext';
-import ReviewSection from '../components/ReviewSection';
 
 import iconUrl from 'leaflet/dist/images/marker-icon.png';
 import iconRetinaUrl from 'leaflet/dist/images/marker-icon-2x.png';
@@ -87,7 +86,7 @@ export default function MapPage() {
   const { t, language } = useLanguage();
   const { isFavorite, toggleFavorite } = useFavorites();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [cafes, setCafes] = useState<Cafe[]>([]);
+  const [cafes, setCafes] = useState<Cafe[]>([...ADDITIONAL_CAFES]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showMobileList, setShowMobileList] = useState(false);
@@ -323,7 +322,7 @@ export default function MapPage() {
 
   const tileUrl = theme === 'dark' 
     ? "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-    : "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png";
+    : "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   return (
     <div className="flex h-[calc(100vh-100px)] lg:h-full w-full relative z-0 flex-1 overflow-hidden font-sans">
@@ -334,7 +333,7 @@ export default function MapPage() {
             style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/paper-fibers.png')" }}
           ></div>
         )}
-        <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-3 pointer-events-none">
+        <div className="absolute top-4 left-4 z-[1000] flex flex-col gap-3 pointer-events-none">
           <button 
             onClick={handleLocateAndFilter}
             disabled={locating}
@@ -417,6 +416,9 @@ export default function MapPage() {
                       alt={cafe.name}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
                       referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800&auto=format&fit=crop";
+                      }}
                     />
                     <div className="absolute top-2 left-2 px-3 py-1 bg-[#FFD700] border-2 border-black text-black text-[10px] font-black uppercase tracking-widest shadow-[3px_3px_0_0_#000]">
                       {cafe.district}
@@ -462,8 +464,6 @@ export default function MapPage() {
                         {t('app.getDirections')}
                       </a>
                     </div>
-
-                    <ReviewSection cafeName={cafe.name} />
                   </div>
                 </div>
               </Popup>
@@ -474,7 +474,7 @@ export default function MapPage() {
 
       <div className={`
         absolute z-[500] 
-        lg:top-10 lg:left-10 lg:w-[420px] lg:bottom-10
+        lg:top-4 lg:right-4 lg:w-[420px] lg:bottom-4
         top-0 left-0 w-full h-[65vh] lg:h-auto
         transform transition-all duration-700 cubic-bezier(0.16, 1, 0.3, 1)
         ${showMobileList ? 'translate-y-0 shadow-none' : 'translate-y-[calc(100vh-80px)] lg:translate-y-0'}

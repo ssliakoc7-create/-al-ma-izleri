@@ -53,9 +53,10 @@ function AppContent() {
               </div>
             </div>
             <nav className="flex gap-4 sm:gap-6 mt-1 w-full justify-between sm:justify-end">
-              <Link to="/" className="text-xs sm:text-sm font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.home').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
-              <Link to="/harita" className="text-xs sm:text-sm font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.map').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
-              <Link to="/liste?filter=favorites" className="text-xs sm:text-sm font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.favorites').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
+              <Link to="/" className="text-[10px] sm:text-xs font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.home').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
+              <Link to="/harita" className="text-[10px] sm:text-xs font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.map').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
+              <Link to="/liste" className="text-[10px] sm:text-xs font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.spots').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
+              <Link to="/liste?filter=favorites" className="text-[10px] sm:text-xs font-black tracking-widest text-black dark:text-white hover:underline decoration-[4px] underline-offset-4 transition-colors duration-300">{t('app.favorites').toLocaleUpperCase(language === 'tr' ? 'tr-TR' : 'en-US')}</Link>
             </nav>
           </div>
         </header>
